@@ -1,0 +1,8 @@
+/src/database/migrations
+node_modules
+.dockerignore
+.gitignore
+README.md
+Dockerfile
+dist
+.container

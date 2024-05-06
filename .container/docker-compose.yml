@@ -1,0 +1,49 @@
+# docker-compose.yml
+version: '3'
+
+volumes:
+  radiabee-backend-dev-postgres:
+  radiabee-backend-dev-cache:
+    driver: local
+
+networks:
+  radiabee:
+    driver: bridge
+
+services:
+
+  cache:
+    image: redis:latest
+    container_name: radiabee-cache
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${redis_password}
+    volumes:
+      - radiabee-backend-dev-cache:/data
+
+  postgres:
+    image: postgis/postgis:14-3.3
+    container_name: radiabee-postgres
+    environment:
+      POSTGRES_USER: ${postgres_user}
+      POSTGRES_PASSWORD: ${postgres_password}
+      APP_DB_NAME: ${postgres_database}
+      PGDATA: /data/postgres
+    volumes:
+      - ./dev-mount:/docker-entrypoint-initdb.d/
+      - radiabee-backend-dev-postgres:/data/postgres
+    ports:
+      - "${postgres_port}:5432"
+    networks:
+      - radiabee
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: radiabee-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${pgadmin_user}@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: ${pgadmin_password}
+    ports:
+      - "${pgadmin_port}:80"
+    networks:
+      - radiabee

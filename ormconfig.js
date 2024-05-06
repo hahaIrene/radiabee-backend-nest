@@ -1,0 +1,36 @@
+const dotenv = require('dotenv')
+
+dotenv.config({
+  path: `./.config/.env.${process.env.ENV}`
+})
+
+module.exports = {
+  "type": process.env.postgres_type,
+  "host": process.env.postgres_host,
+  "port": process.env.postgres_port,
+  "username": process.env.postgres_user,
+  "password": process.env.postgres_password,
+  "database": process.env.postgres_database,
+  "synchronize": false,
+  "logging": false,
+  "entities": [
+    // "src/database/entity/**/*.ts"
+    process.env.ENV ? "src/database/entity/**/*.ts" : "dist/database/entity/**/*.js"
+  ],
+  "migrations": [
+    // "src/database/migrations/**/*.ts"
+    process.env.ENV ? "src/database/migrations/**/*.ts": "dist/database/migrations/**/*.js"
+  ],
+  "seeds": [
+    // "src/database/seeds/**/*.ts"
+    process.env.ENV ? "src/database/seeds/**/*.ts": "dist/database/seeds/**/*.js"
+  ],
+  "subscribers": [
+    "src/subscriber/**/*.ts"
+  ],
+  "cli": {
+    "entitiesDir": "src/database/entity",
+    "migrationsDir": "src/database/migrations",
+    "subscribersDir": "src/database/subscriber"
+  }
+}
