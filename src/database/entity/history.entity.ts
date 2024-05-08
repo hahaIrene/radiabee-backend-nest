@@ -1,18 +1,16 @@
-import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
-
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'history' })
 export class History {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'text'})
+  @Column({ type: 'text' })
   sensorId: string;
 
-  @Column({ type: 'timestamptz'})
+  @Column({ type: 'timestamptz' })
   createdAt: Date;
 
-  @Column({ type: 'double precision'})
+  @Column({ type: 'double precision' })
   value: number;
 }
-

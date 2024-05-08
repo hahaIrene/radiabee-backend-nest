@@ -6,7 +6,7 @@ export class Sensor {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'text'})
+  @Column({ type: 'text' })
   name: string;
 
   @Index({ spatial: true })
@@ -17,6 +17,4 @@ export class Sensor {
     nullable: true,
   })
   coordinate: Point;
-
 }
-

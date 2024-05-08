@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Factory, Seeder } from 'typeorm-seeding';
 import fs from 'fs';
 import { Connection } from 'typeorm';
