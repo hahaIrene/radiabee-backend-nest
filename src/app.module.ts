@@ -6,6 +6,7 @@ import commandLineArgs from 'command-line-args';
 import { join } from 'path';
 import { DatabaseModule } from './database/database.module';
 import { CacheModule } from './cache/cache.module';
+import { SensorModule } from './sensor/sensor.module';
 
 const options = commandLineArgs([
   {
@@ -23,6 +24,7 @@ const options = commandLineArgs([
     }),
     DatabaseModule,
     CacheModule,
+    SensorModule,
   ],
   controllers: [AppController],
   providers: [AppService],
