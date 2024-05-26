@@ -17,4 +17,9 @@ export class SensorController {
   ) {
     return await this.sensorService.findOne(id, param.startTime, param.endTime);
   }
+
+  @Get('aaa/:uri')
+  async getLatestHistories() {
+    return await this.sensorService.getLatestHistories();
+  }  
 }

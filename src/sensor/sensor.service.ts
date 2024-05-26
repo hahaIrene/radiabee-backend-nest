@@ -18,9 +18,38 @@ export class SensorService {
     const historys = await repo
       .createQueryBuilder('history')
       .where('history.sensorId = :id', { id })
-      .andWhere('history.createdAt <= :startTime', { startTime })
-      .andWhere('history.createdAt >= :endTime', { endTime })
+      .andWhere('history.createdAt >= :startTime', { startTime })
+      .andWhere('history.createdAt <= :endTime', { endTime })
       .getMany();
     return historys;
   }
+
+  async getLatestHistories() {
+    const historyRepo = this.databaseService.connection.getRepository(History);
+    const sensorRepo = this.databaseService.connection.getRepository(Sensor);
+    const sensors = await sensorRepo.find();
+    const latestHistories = [];
+  
+    for (const sensor of sensors) {
+      const latestHistory = await historyRepo
+        .createQueryBuilder('history')
+        .where('history.sensorId = :sensorId', { sensorId: sensor.id })
+        .orderBy('history.createdAt', 'DESC')
+        .getOne();
+
+        latestHistories.push({
+          sensorId: sensor.id,
+          sensorName: sensor.name,
+          coordinate: sensor.coordinate,
+          historyId: latestHistory.id,
+          createdAt: latestHistory.createdAt,
+          value: latestHistory.value,
+        });
+    }
+    return latestHistories;
+  }
+  
+  
+  
+  
 }

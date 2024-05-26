@@ -10,6 +10,12 @@ const seeders = [
   `src/database/seeds/create-2021station.seeds.${seedEnv}`,
 ];
 
+const seedEnv = process.env.ENV ? 'ts' : 'js';
+const seeders = [
+  `src/database/seeds/create-test.seed.${seedEnv}`,
+  `src/database/seeds/create-2021station.seeds.${seedEnv}`,
+];
+
 module.exports = {
   type: process.env.postgres_type,
   host: process.env.postgres_host,
