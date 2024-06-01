@@ -16,6 +16,10 @@ export class SensorService {
 
   async findOne(id: string, startTime: string, endTime: string) {
     const repo = this.databaseService.connection.getRepository(History);
+
+    console.log(id);
+    console.log(startTime);
+    console.log(endTime);
     const historys = await repo
       .createQueryBuilder('history')
       .where('history.sensorId = :id', { id })
