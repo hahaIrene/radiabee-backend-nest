@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { Sensor } from 'src/database/entity/sensor.entity';
 import { History } from 'src/database/entity/history.entity';
-import moment from 'moment';
 
 @Injectable()
 export class SensorService {
