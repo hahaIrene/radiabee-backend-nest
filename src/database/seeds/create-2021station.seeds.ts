@@ -6,7 +6,7 @@ import { History } from '../entity/history.entity';
 import { Sensor } from '../entity/sensor.entity';
 import path from 'path';
 
-export default class CreateTest implements Seeder {
+export default class CreateHistory implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<any> {
     const repo = connection.getRepository(History);
     const sensorRepo = connection.getRepository(Sensor);
@@ -31,12 +31,14 @@ export default class CreateTest implements Seeder {
         }
       }
 
+      console.log(sensorNameMap2Id);
+
       for (const file of files) {
         const HistoryEntities: History[] = [];
         if (file.endsWith('.json')) {
-          console.log(file);
-          const filePath = `${directoryPath}/${file}`;
+          const filePath = path.join(directoryPath, file);
           const data = require(filePath);
+          console.log(sensorNameMap2Id[file.replace('.json', '')]);
 
           if (!sensorNameMap2Id[file.replace('.json', '')]) continue;
           for (let i = 0; i < data.length; i++) {
@@ -50,6 +52,9 @@ export default class CreateTest implements Seeder {
             HistoryEntities.push(historyEntity);
           }
           await repo.insert(HistoryEntities);
+          console.log(
+            `Insert ${year} - ${file} - ${HistoryEntities.length} done`,
+          );
         }
       }
     };
